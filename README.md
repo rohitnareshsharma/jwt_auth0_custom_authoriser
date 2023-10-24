@@ -13,6 +13,9 @@ It is forked from https://github.com/auth0-samples/jwt-rsa-aws-custom-authorizer
 ## Pre Requisite
  1. SAM CLI Configured on your machine and linked to your aws account.
 
+## To Execute
+   zsh ./scripts/buildDeploy.sh
+
 ## TODO
  1. Replace your token audience and issuer info in the .env and template.yaml file
  2. Customise the event.json to carry your test tokens.
