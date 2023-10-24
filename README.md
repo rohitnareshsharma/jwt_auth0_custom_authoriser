@@ -1,4 +1,4 @@
-# jwt_auth0_custom_authoriser
+# jwt_aws_auth0_custom_authoriser
 
 This repository is for you if 
 
