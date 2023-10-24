@@ -22,9 +22,9 @@ Resources:
       Timeout: 30
       Environment:
         Variables:
-          AUDIENCE: https://api.mimbuzz.me
-          JWKS_URI: https://auth.mimbuzz.me/.well-known/jwks.json
-          TOKEN_ISSUER: https://auth.mimbuzz.me/
+          AUDIENCE: https://api.yourdomain.com
+          JWKS_URI: https://auth.yourdomain.com/.well-known/jwks.json
+          TOKEN_ISSUER: https://auth.yourdomain.com/
       Architectures:
         - x86_64
       Role: !GetAtt JwtCustomAuthoriserRole.Arn
