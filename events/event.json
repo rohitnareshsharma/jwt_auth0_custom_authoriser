@@ -1,0 +1,31 @@
+{
+    "version": "2.0",
+    "type": "REQUEST",
+    "routeArn": "arn:aws:execute-api:ap-south-1:123456789:g123456/Prod/POST/test",
+    "identitySource": [
+        "Bearer REPLACE_ME_WITH_YOUR_TOKEN"
+    ],
+    "routeKey": "POST /test",
+    "rawPath": "/Prod/test",
+    "rawQueryString": "",
+    "headers": {
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "authorization": "Bearer REPLACE_ME_WITH_YOUR_TOKEN",
+        "cache-control": "no-cache",
+        "content-length": "146",
+        "content-type": "application/json",
+        "host": "api.yourdomain.com",
+        "user-agent": "PostmanRuntime/7.33.0",
+        "x-amzn-trace-id": "Root=123456789",
+        "x-client-app-version-code": "1.0.0",
+        "x-client-app-version-name": "Postman Web Client",
+        "x-client-build-type": "stage",
+        "x-client-id": "Postman",
+        "x-client-os-version-code": "Postman No Code",
+        "x-client-os-version-name": "Postman No Name",
+        "x-forwarded-for": "127.0.0.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    }
+}

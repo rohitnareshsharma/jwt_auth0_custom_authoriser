@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  User lambda
+  Sample SAM Template for User profile operations
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+
+Resources:
+  JwtCustomAuthoriser:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: main/
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Timeout: 30
+      Environment:
+        Variables:
+          AUDIENCE: https://api.mimbuzz.me
+          JWKS_URI: https://auth.mimbuzz.me/.well-known/jwks.json
+          TOKEN_ISSUER: https://auth.mimbuzz.me/
+      Architectures:
+        - x86_64
+      Role: !GetAtt JwtCustomAuthoriserRole.Arn
+
+  JwtCustomAuthoriserRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: JwtCustomAuthoriserRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - apigateway.amazonaws.com
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+
+  JwtCustomAuthoriserPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: JwtCustomAuthoriserPolicy
+      Roles:
+        - JwtCustomAuthoriserRole
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+              - xray:PutTraceSegments
+              - xray:PutTelemetryRecords
+              - xray:GetSamplingRules
+              - xray:GetSamplingTargets
+              - xray:GetSamplingStatisticSummaries
+            Resource:
+              - "*"
+
+  ApplicationResourceGroup:
+    Type: AWS::ResourceGroups::Group
+    Properties:
+      Name:
+        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
+      ResourceQuery:
+        Type: CLOUDFORMATION_STACK_1_0
+  ApplicationInsightsMonitoring:
+    Type: AWS::ApplicationInsights::Application
+    Properties:
+      ResourceGroupName:
+        Ref: ApplicationResourceGroup
+      AutoConfigurationEnabled: "true"
